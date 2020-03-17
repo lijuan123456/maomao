@@ -1,80 +1,62 @@
-<template>
-	<div id="content">
-		
+ <template>
+	<Loading v-if="isloading" />
+		<Scroller v-else>
 	
 	<div class="movie_body">
 	<ul>
-		<li>
-		 <div class="pic_show"><img src="/images/tu1.jpg"/></div>
+		<li v-for="item in comingList" :key="item.id">
+		 <div class="pic_show" @tap="handleToDetail(item.id)"><img :src="item.img | setWH('182.180')"/></div>
 		 <div class="info_list">
-		 	<h2>大点音</h2>
-		    <p>观众评分 <span>9.2</span>  </p>
-		    <p>主演：程江、大海、孙悦</p>
-		    <p>几天55家电影放映607场</p>
+		 	<h2 @tap="handleToDetail(item.id)">{{item.nm}}</h2>
+		    <p> <span>{{item.wish}}</span>人想看  </p>
+		    <p>主演：{{item.star}}</p>
+		    <p>{{item.rt}} 上映</p>
 		    
 		 </div>
 		 <div class="btn_pre">预售</div>
 		</li>
-		<li>
-		 <div class="pic_show"><img src="/images/tu2.jpg"/></div>
-		 <div class="info_list">
-		 	<h2>米物质层</h2>
-		    <p>观众评分 <span>8.9</span>  </p>
-		    <p>主演：汤姆.哈迪 、李连杰、成龙</p>
-		    <p>几天57家电影放映445场</p>
-		 </div>
-		 <div class="btn_pre">预售</div>
-		</li>
-		<li>
-		 <div class="pic_show"><img src="/images/tu1.jpg"/></div>
-		 <div class="info_list">
-		 	<h2>大点音</h2>
-		    <p>观众评分 <span>9.2</span>  </p>
-		    <p>主演：程江、大海、孙悦</p>
-		    <p>几天55家电影放映607场</p>
-		 </div>
-		 <div class="btn_pre">预售</div>
-		</li>
-		<li>
-		 <div class="pic_show"><img src="/images/tu2.jpg"/></div>
-		 <div class="info_list">
-		 	<h2>米物质层</h2>
-		    <p>观众评分 <span>8.9</span>  </p>
-		    <p>主演：汤姆.哈迪 、李连杰、成龙</p>
-		    <p>几天57家电影放映445场</p>
-		 </div>
-		 <div class="btn_pre">预售</div>
-		</li>
-		<li>
-		 <div class="pic_show"><img src="/images/tu1.jpg"/></div>
-		 <div class="info_list">
-		 	<h2>大点音</h2>
-		    <p>观众评分 <span>9.2</span>  </p>
-		    <p>主演：程江、大海、孙悦</p>
-		    <p>几天55家电影放映607场</p>
-		 </div>
-		 <div class="btn_pre">预售</div>
-		</li>
-		<li>
-		 <div class="pic_show"><img src="/images/tu2.jpg"/></div>
-		 <div class="info_list">
-		 	<h2>米物质层</h2>
-		    <p>观众评分 <span>8.9</span>  </p>
-		    <p>主演：汤姆.哈迪 、李连杰、成龙</p>
-		    <p>几天57家电影放映445场</p>
-		    
-		 </div>
-		 <div class="btn_pre">预售</div>
-		</li>
+		
+		
+		
+		
+		
 	</ul>
 	
 	</div>
-	</div>
+	</Scroller>
 </template>
 
 <script>
 	export default{
-		name:'comingsoon'
+		name:'comingsoon',
+		data(){
+			return{
+				comingList:[],
+				isloading:true,
+				prevcityId:-1
+			}
+		},
+		activated(){
+			var cityId=this.$store.state.city.id
+			if(this.prevcityId===cityId){
+				return
+			}
+			this.isloading=true;
+			this.axios.get('/api/movieComingList?cityId='+cityId).then((res)=>{
+				var msg=res.data.msg;
+				if(msg==='ok'){
+					this.comingList=res.data.data.comingList;
+					this.isloading=false;
+					this.prevcityId=cityId
+				}
+			})
+		},
+		methods:{
+			handleToDetail(moveId){
+				console.log(moveId)
+				this.$router.push('/move/detail/2/'+moveId)
+			}
+		}
 	}
 </script>
 
@@ -84,7 +66,7 @@
 		overflow: auto;
 	}
 	.movie_body ul{
-		margin: 0 12px;
+		margin: 0px 12px;
 		overflow: hidden;
 		
 		

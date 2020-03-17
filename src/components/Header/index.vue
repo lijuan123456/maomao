@@ -1,5 +1,6 @@
 <template>
 	<header id="header">
+	<slot></slot>
 		<h1>{{title}}</h1>
 	</header>
 </template>
@@ -22,7 +23,8 @@
 		width: 100%;
 		height: 50px;
 		color: #FFFFFF;
-		background: #E54847;
+		background:#E54847;
+		
 		border-bottom: 1px solid #E54847;position: relative;
 		
 		

@@ -2,37 +2,59 @@
 	<div id="main">
 		<Header title="喵喵电影"></Header>
 		<div id="content">
+			<div class="cont_move">
+				
+			
 			<div class="movie_menu">
 				<router-link class="city_name" tag='div' to='/move/city'>
-					<span>北京</span><i class="icon-3"></i>
+					<span>{{$store.state.city.nm}}</span><i class="icon-3"></i>
 
 				</router-link>
 				<div class="hot-swtich">
-					<router-link class="hot_item s" tag='div' to='/move/nowplaying'>正在热映</router-link>
+					<router-link class="hot_item " tag='div' to='/move/nowplaying'>正在热映</router-link>
 					<router-link class="hot_item" tag='div' to='/move/comingsoon'>即将上映</router-link>
 				</div>
 				<router-link class="search_entry" tag='div' to='/move/search'>
 					<i class="icon-1"></i>
 				</router-link>
 			</div>
+			</div>
 			<keep-alive>
-				<router-view></router-view>
+				<router-view ></router-view>
 			</keep-alive>
 		</div>
 		<TabBar></TabBar>
-
+		
+			<router-view name='detail'></router-view>
+		
 	</div>
 </template>
 
 <script>
 	import Header from '@/components/Header'
 	import TabBar from '@/components/TabBar'
+	//	import { messageBox } from '@/components/Js'
 
 	export default {
 		name: 'move',
 		components: {
 			Header,
 			TabBar
+
+		},
+		mounted() {
+			//			messageBox({
+			//				title: '定位1',
+			//				content: '上冻',
+			//				cancel: '取消',
+			//				ok: '确定',
+			//				handleCancel() {
+			//					console.log(1)
+			//				},
+			//				handelOk() {
+			//					console.log(2)
+			//				}
+			//			})
 		}
 	}
 </script>
@@ -45,15 +67,27 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
-	}
-	/*s*/
 	
+	
+	}
+	
+	.cont_move{
+		
+		position:relative;
+		top: 0px;
+		background: white;
+		z-index: 100;
+		
+	}
 	#content .movie_menu {
 		width: 100%;
 		height: 45px;
 		border-bottom: 1px solid #E6E6E6;
 		display: flex;
 		justify-content: space-between;
+		background:white;
+		/*margin-bottom: 26px;*/
+		z-index: 100;
 	}
 	
 	.movie_menu .city_name {
@@ -76,6 +110,7 @@
 		display: flex;
 		height: 100%;
 		line-height: 45px;
+		
 	}
 	
 	.movie_menu .hot_item {

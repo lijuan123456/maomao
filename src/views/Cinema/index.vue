@@ -28,6 +28,16 @@
 </script>
 
 <style scoped>
+	#content{
+		#content {
+		flex: 1;
+		overflow: auto;
+		margin-bottom: 50px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+	}
+	}
 	.cinema-menu{
 		width: 100%;
 		height: 45px;
